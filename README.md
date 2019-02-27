@@ -8,12 +8,12 @@ API for my [portfolio dashboard](https://github.com/tmurphree/portfolio-dashboar
 
 ## Setup (assumes you have Node.js installed)  
 1. Clone and build [the front end](https://github.com/tmurphree/portfolio-dashboard-front-end).  
-1. Get an Alpha Vantage API key [link](https://www.alphavantage.co/).  
-2. Clone this repo.  
-3. Create an .env file.  Create an ALPHA_VANTAGE_API_KEY variable, set it to the value obtained in step 2.  
-m. Copy the `dist` folder from the front end (that you cloned in step 1) to `public` in this repo.
-3. Run `npm install`.    
-4. Run `npm start`.  
+2. Get an Alpha Vantage API key [link](https://www.alphavantage.co/).  
+3. Clone this repo.  
+4. Create an .env file.  Create an ALPHA_VANTAGE_API_KEY variable, set it to the value obtained in step 2.  
+5. Copy the `dist` folder from the front end (that you cloned in step 1) to `public` in this repo.
+6. Run `npm install`.    
+7. Run `npm start`.  
 
 ## Making Changes  
 Fork this repo and submit a pull request.  Pull requests with passing unit tests are 100% more likely to be merged into the project.  
