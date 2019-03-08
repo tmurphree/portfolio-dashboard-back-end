@@ -1,11 +1,9 @@
 const { execSync } = require('child_process');
 
 const { buildNewDockerImage } = require('./lib/buildNewDockerImage');
-const { replaceEnvFileContents } = require('./lib/replaceEnvFileContents');
 
 
-replaceEnvFileContents('production')
-  .then(() => buildNewDockerImage('production'))
+buildNewDockerImage('production')
   .then((imageTag) => {
     const tagDockerImageAsLatest = () => {
       try {
