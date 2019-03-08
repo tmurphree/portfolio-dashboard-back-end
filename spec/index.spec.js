@@ -2,8 +2,7 @@
 
 require('dotenv').config();
 
-// const dataService = require('./data.service.js');
-const myLambda = require('../index.js');
+// const myLambda = require('../index.js');
 
 // const verboseOutput = true;
 

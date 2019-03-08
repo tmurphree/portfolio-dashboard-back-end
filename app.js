@@ -25,18 +25,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, Origin, X-Requested-With');
-  res.set('Content-Security-Policy',"base-uri 'self'");
-  res.set('Content-Security-Policy',"default-src 'none'");
-  res.set('Content-Security-Policy',"font-src 'self'");
-  res.set('Content-Security-Policy',"form-action 'self'");
-  res.set('Content-Security-Policy',"img-src 'self'");
-  res.set('Content-Security-Policy',"object-src 'self'");
-  res.set('Content-Security-Policy',"script-src 'self'");
-  res.set('Content-Security-Policy',"style-src 'self'");
-  res.set('Content-Security-Policy',"worker-src 'self'");
+  res.set('Content-Security-Policy', "base-uri 'self'");
+  res.set('Content-Security-Policy', "default-src 'none'");
+  res.set('Content-Security-Policy', "font-src 'self'");
+  res.set('Content-Security-Policy', "form-action 'self'");
+  res.set('Content-Security-Policy', "img-src 'self'");
+  res.set('Content-Security-Policy', "object-src 'self'");
+  res.set('Content-Security-Policy', "script-src 'self'");
+  res.set('Content-Security-Policy', "style-src 'self'");
+  res.set('Content-Security-Policy', "worker-src 'self'");
 
   next();
 });

@@ -8,7 +8,7 @@ const expecedFilesPresent = function expecedFilesPresent() {
 
 /**
  * @description Given three files (.env, .env.test, and .env.production),
- *    replaces .env with the appropriate environment-specific file. 
+ *    replaces .env with the appropriate environment-specific file.
  * @param {string} env Environment to build for.  Must be 'test' or 'production'.
  * @returns {undefined}
  * @version 1.1

@@ -20,27 +20,27 @@ const buildNewDockerImage = function buildNewDockerImage(env = 'test') {
       'Dockerfile';
 
     const imageTag = env === 'test' ?
-      `${name.replace('@','')}:${version}-test` :
-      `${name.replace('@','')}:${version}`;
-  
+      `${name.replace('@', '')}:${version}-test` :
+      `${name.replace('@', '')}:${version}`;
+
     const dockerBuildCommand = spawn(
-      'docker', 
+      'docker',
       [
         'build',
         '-f', `${dockerFile}`,
         '-t', `${imageTag}`,
-        '.'
-      ]
+        '.',
+      ],
     );
-  
+
     dockerBuildCommand.stdout.on('data', (data) => {
       console.log(data);
     });
-  
+
     dockerBuildCommand.stderr.on('data', (data) => {
       console.error(`stderr: ${data}`);
     });
-  
+
     dockerBuildCommand.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
       resolve(imageTag);
