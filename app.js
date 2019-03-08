@@ -1,4 +1,5 @@
 const cookieParser = require('cookie-parser');
+const expressEnforcesSsl = require('express-enforces-ssl');
 const express = require('express');
 const helmet = require('helmet');
 const logger = require('morgan');
@@ -8,6 +9,14 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  // add x-forwarded-proto to req.protocol and otherwise tell Express
+  // we're behind a proxy
+  // https://expressjs.com/en/guide/behind-proxies.html
+  app.enable('trust proxy');
+  app.use(expressEnforcesSsl());
+}
 
 app.use(helmet());
 app.use(logger('dev'));
