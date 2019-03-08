@@ -15,10 +15,6 @@ buildNewDockerImage('production')
     };
 
     tagDockerImageAsLatest();
-
-    // avoid accidentally testing in production
-    console.log('Reverting to development .env file.');
-    return replaceEnvFileContents('test');
   })
   .catch((err) => {
     console.error(err);
