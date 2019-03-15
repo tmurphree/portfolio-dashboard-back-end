@@ -16,7 +16,7 @@ const buildNewDockerImage = function buildNewDockerImage(env = 'test') {
     const { name, version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
     const dockerFile = env === 'test' ?
-      'Dockerfile.development' :
+      'Dockerfile.test' :
       'Dockerfile';
 
     const imageTag = env === 'test' ?
@@ -34,7 +34,7 @@ const buildNewDockerImage = function buildNewDockerImage(env = 'test') {
     );
 
     dockerBuildCommand.stdout.on('data', (data) => {
-      console.log(data);
+      console.log(`${data}`);
     });
 
     dockerBuildCommand.stderr.on('data', (data) => {
