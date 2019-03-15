@@ -5,9 +5,9 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const path = require('path');
 
-const indexRouter = require('./routes/index.route');
-const pricesRouter = require('./routes/prices.route');
-const usersRouter = require('./routes/users.route');
+const indexRouter = require('./routes/index.router');
+const pricesRouter = require('./routes/prices.router');
+const usersRouter = require('./routes/users.router');
 
 const app = express();
 
