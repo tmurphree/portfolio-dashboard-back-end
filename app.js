@@ -5,8 +5,9 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const path = require('path');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index.route');
+const pricesRouter = require('./routes/prices.route');
+const usersRouter = require('./routes/users.route');
 
 const app = express();
 
@@ -41,7 +42,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', indexRouter);
+app.use('/prices', pricesRouter);
 app.use('/users', usersRouter);
+app.use('/', indexRouter);
 
 module.exports = app;
