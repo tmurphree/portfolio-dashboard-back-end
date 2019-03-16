@@ -32,11 +32,47 @@ jasmine.getEnv().addReporter(myReporter);
 // #endregion jasmine setup
 
 describe('getPrices', () => {
-  it('does something cool', () => getPrices()
+  it('expects a string', () => getPrices(12)
     .then((res) => {
-      expect(res).toBe('foo');
+      console.log('Expected to fail but succeeded (getPrices expects a string):');
+      console.log(res);
+      fail('expected to succeed');
+    })
+    .catch((err) => {
+      expect(err.message).toBe('Invalid input.');
+    }));
+
+  it('returns a price for a symbol that is found', () => getPrices('itot')
+    .then((res) => {
+      const result = JSON.parse(res);
+
+      expect(typeof result).toBe('object');
+
+      expect(Object.keys(result)).toEqual(['ok', 'symbol', 'price']);
+      expect(result.ok).toBe(true);
+      expect(result.symbol).toBe('ITOT');
+      expect(typeof result.price).toBe('number');
+      expect(result.price).toBeGreaterThan(50, `price is ${result.price}`);
     })
     .catch((err) => {
       console.error(err);
+      fail('expected to succeed');
+    }));
+
+  it('returns an error message for a symbol that is not found', () => getPrices('someBadSymbol')
+    .then((res) => {
+      const result = JSON.parse(res);
+
+      expect(typeof result).toBe('object');
+
+      expect(Object.keys(result)).toEqual(['ok', 'message']);
+      expect(result.ok).toBe(false);
+      expect(result.message).toBe('Could not get a price for symbol someBadSymbol.  Symbol probably not found.');
+      expect(result.symbol).toBe(undefined);
+      expect(result.price).toBe(undefined);
+    })
+    .catch((err) => {
+      console.error(err);
+      fail('expected to succeed');
     }));
 });
