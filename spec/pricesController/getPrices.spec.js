@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const { getPrices } = require('../../controllers/prices.controller');
+const { getPrice } = require('../../controllers/prices.controller');
 
 // #region jasmine setup
 const origTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -31,10 +31,10 @@ const myReporter = {
 jasmine.getEnv().addReporter(myReporter);
 // #endregion jasmine setup
 
-describe('getPrices', () => {
-  it('expects a string', () => getPrices(12)
+describe('getPrice', () => {
+  it('expects a string', () => getPrice(12)
     .then((res) => {
-      console.log('Expected to fail but succeeded (getPrices expects a string):');
+      console.log('Expected to fail but succeeded (getPrice expects a string):');
       console.log(res);
       fail('expected to succeed');
     })
@@ -42,7 +42,7 @@ describe('getPrices', () => {
       expect(err.message).toBe('Invalid input.');
     }));
 
-  it('returns a price for a symbol that is found', () => getPrices('itot')
+  it('returns a price for a symbol that is found', () => getPrice('itot')
     .then((res) => {
       const result = JSON.parse(res);
 
@@ -59,7 +59,7 @@ describe('getPrices', () => {
       fail('expected to succeed');
     }));
 
-  it('returns an error message for a symbol that is not found', () => getPrices('someBadSymbol')
+  it('returns an error message for a symbol that is not found', () => getPrice('someBadSymbol')
     .then((res) => {
       const result = JSON.parse(res);
 

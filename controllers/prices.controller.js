@@ -1,7 +1,7 @@
-const getPrices = function getPrices() {
+const getPrice = function getPrice() {
 
 };
 
 module.exports = {
-  getPrices,
+  getPrice,
 };
