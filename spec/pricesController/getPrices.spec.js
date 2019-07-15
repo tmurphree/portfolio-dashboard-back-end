@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const { getPrices } = require('../../controllers/prices.controller');
+const { getLatestPrice } = require('../../controllers/prices.controller');
 
 // #region jasmine setup
 const origTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -31,12 +31,48 @@ const myReporter = {
 jasmine.getEnv().addReporter(myReporter);
 // #endregion jasmine setup
 
-describe('getPrices', () => {
-  it('does something cool', () => getPrices()
+describe('getLatestPrice', () => {
+  it('expects a string (part 1)', () => getLatestPrice()
     .then((res) => {
-      expect(res).toBe('foo');
+      console.log(res);
+      fail('expected to fail');
+    })
+    .catch((err) => {
+      expect(err instanceof Error).toBe(true);
+      expect(err.message).toMatch(/bad input/i);
+    }));
+
+  it('expects a string (part 2)', () => getLatestPrice({ shouldFail: true, symbol: 'msft' })
+    .then((res) => {
+      console.log(res);
+      fail('expected to fail');
+    })
+    .catch((err) => {
+      expect(err instanceof Error).toBe(true);
+      expect(err.message).toMatch(/bad input/i);
+    }));
+
+  it('rejects when it cannot find a price for a symbol', () => getLatestPrice('thisSymbolDoesntExist')
+    .then((res) => {
+      console.log(res);
+      fail('expected to fail');
+    })
+    .catch((err) => {
+      expect(err instanceof Error).toBe(true);
+      expect(err.message).toMatch(/unable to find a price for symbol/i);
+    }));
+
+  it('gets the price for a symbol it can find', () => getLatestPrice('msft')
+    .then((res) => {
+      expect(typeof res).toBe('object');
+      expect(res.symbol).toBe('msft');
+      expect(typeof res.price).toBe('number');
+      expect(res.price).toBeGreaterThan(12);
+      expect(typeof res.lastRefreshed).toBe('string');
+      expect(res.lastRefreshed).toMatch(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
     })
     .catch((err) => {
       console.error(err);
+      fail('expected to succeed');
     }));
 });
