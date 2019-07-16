@@ -52,24 +52,84 @@ describe('getLatestPrice', () => {
       expect(err.message).toMatch(/bad input/i);
     }));
 
-  it('rejects when it cannot find a price for a symbol', () => getLatestPrice('thisSymbolDoesntExist')
+  // this resolves because getManyPrices will use Promies.all, and if it rejects then it'll blow
+  // up the Promise.all
+  it(
+    'resolves to an object with an "error": true prop when it cannot find a price for a symbol',
+    () => getLatestPrice('thisSymbolDoesntExist')
+      .then((res) => {
+        expect(typeof res).toBe('object');
+        expect(res.error).toBe(true);
+        expect(res.errorMessage).toMatch(/cannot find price/i);
+        expect(res.symbol).toBe('thisSymbolDoesntExist');
+        expect(res.price).toBeUndefined();
+        expect(res.lastRefreshed).toBeUndefined();
+      })
+      .catch((err) => {
+        console.error(err);
+        fail('expected to succeed');
+      }),
+  );
+
+  it('gets the price for a symbol it can find', () => getLatestPrice('msft')
+    .then((res) => {
+      expect(typeof res).toBe('object');
+      expect(res.error).toBe(false);
+      expect(res.errorMessage).toBeUndefined();
+      expect(res.symbol).toBe('msft');
+      expect(typeof res.price).toBe('number');
+      expect(res.price).toBeGreaterThan(1);
+      expect(typeof res.lastRefreshed).toBe('string');
+      expect(res.lastRefreshed).toMatch(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
+    })
+    .catch((err) => {
+      console.error(err);
+      fail('expected to succeed');
+    }));
+});
+
+xdescribe('getManyPrices', () => {
+  const count = function count(array, filterFunction) {
+    return array.filter(filterFunction).length;
+  };
+
+  it('expects an array of strings (part 1)', () => getManyPrices('msft')
     .then((res) => {
       console.log(res);
       fail('expected to fail');
     })
     .catch((err) => {
       expect(err instanceof Error).toBe(true);
-      expect(err.message).toMatch(/unable to find a price for symbol/i);
+      expect(err.message).toMatch(/bad input/i);
     }));
 
-  it('gets the price for a symbol it can find', () => getLatestPrice('msft')
+  it('expects an array of strings (part 2)', () => getManyPrices([1, 2, 3])
     .then((res) => {
-      expect(typeof res).toBe('object');
-      expect(res.symbol).toBe('msft');
-      expect(typeof res.price).toBe('number');
-      expect(res.price).toBeGreaterThan(12);
-      expect(typeof res.lastRefreshed).toBe('string');
-      expect(res.lastRefreshed).toMatch(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
+      console.log(res);
+      fail('expected to fail');
+    })
+    .catch((err) => {
+      expect(err instanceof Error).toBe(true);
+      expect(err.message).toMatch(/bad input/i);
+    }));
+
+  it('resolves when it cannot find a price for a symbol', () => getManyPrices(['ba', 'thisSymbolDoesntExist', 'msft'])
+    .then((res) => {
+      expect(Array.isArray(res)).toBe(true);
+      expect(count(res, x => x.error === true)).toBe(1);
+      expect(count(res, x => x.error === false)).toBe(2);
+    })
+    .catch((err) => {
+      console.error(err);
+      fail('expected to succeed');
+    }));
+
+  it('gets the prices for symbols it can find', () => getManyPrices(['ba', 'csco', 'msft'])
+    .then((res) => {
+      expect(Array.isArray(res)).toBe(true);
+      expect(count(res, x => x.error === true)).toBe(0);
+      expect(count(res, x => x.error === false)).toBe(3);
+      expect(res.every(el => el.price > 1)).toBe(true);
     })
     .catch((err) => {
       console.error(err);
