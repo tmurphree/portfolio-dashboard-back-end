@@ -71,7 +71,7 @@ describe('getLatestPrice', () => {
       }),
   );
 
-  xit('gets the price for a symbol it can find', () => getLatestPrice('msft')
+  it('gets the price for a symbol it can find', () => getLatestPrice('msft')
     .then((res) => {
       expect(typeof res).toBe('object');
       expect(res.error).toBe(false);
