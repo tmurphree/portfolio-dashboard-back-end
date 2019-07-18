@@ -15,6 +15,16 @@ const getLatestPrice = function getLatestPrice(symbol) {
     const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
     axios.get(url)
       .then((res) => {
+        // use a regex to avoid capitalization issues (what if it changes?)
+        if (Object.keys(res.data).some(el => /error message/i.test(el))) {
+          resolve({
+            error: true,
+            errorMessage: `Cannot find price for symbol ${symbol}.`,
+            symbol,
+          });
+          return;
+        }
+
         console.log(res.data);
       })
       .catch((err) => {

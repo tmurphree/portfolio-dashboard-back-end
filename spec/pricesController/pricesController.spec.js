@@ -54,7 +54,7 @@ describe('getLatestPrice', () => {
 
   // this resolves because getManyPrices will use Promies.all, and if it rejects then it'll blow
   // up the Promise.all
-  xit(
+  it(
     'resolves to an object with an "error": true prop when it cannot find a price for a symbol',
     () => getLatestPrice('thisSymbolDoesntExist')
       .then((res) => {
