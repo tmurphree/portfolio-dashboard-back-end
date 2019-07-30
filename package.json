@@ -1,31 +1,29 @@
 {
   "name": "@tmurphree/portfolio-dashboard-back-end",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./bin/www",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore --fix .",
     "postinstall": "npm audit",
     "start": "node ./bin/www",
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "nodemon --exec jasmine spec/index.spec.js",
+    "test": "jasmine spec/pricesController/pricesController.spec.js",
     "test:all": "jasmine"
   },
   "keywords": [],
   "author": "Tom Murphree",
   "license": "MIT",
   "devDependencies": {
-    "dotenv": "6.2.0",
+    "dotenv": "8.0.0",
     "eslint": "5.3.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.16.0",
-    "jasmine": "3.3.1",
-    "nodemon": "1.18.10"
+    "jasmine": "3.3.1"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "0.19.0",
     "cookie-parser": "1.4.3",
     "debug": "2.6.9",
     "express": "4.16.0",

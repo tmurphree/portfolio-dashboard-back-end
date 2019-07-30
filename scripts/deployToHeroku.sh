@@ -30,4 +30,6 @@ then
   heroku container:release web -a $APP_NAME --verbose;
   heroku open -a $APP_NAME;
   docker rmi registry.heroku.com/$APP_NAME/web:latest
+  docker system prune --force;
+  heroku logs --tail -a $APP_NAME;
 fi
