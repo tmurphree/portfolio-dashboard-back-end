@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const { getLatestPrice } = require('../../controllers/prices.controller');
+const { getLatestPrice, getManyPrices } = require('../../controllers/prices.controller');
 
 // #region jasmine setup
 const origTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -61,9 +61,9 @@ describe('getLatestPrice', () => {
         expect(typeof res).toBe('object');
         expect(res.error).toBe(true);
         expect(res.errorMessage).toMatch(/cannot find price/i);
-        expect(res.symbol).toBe('thisSymbolDoesntExist');
-        expect(res.price).toBeUndefined();
         expect(res.lastRefreshed).toBeUndefined();
+        expect(res.price).toBeUndefined();
+        expect(res.symbol).toBe('thisSymbolDoesntExist');
       })
       .catch((err) => {
         console.error(err);
@@ -76,11 +76,11 @@ describe('getLatestPrice', () => {
       expect(typeof res).toBe('object');
       expect(res.error).toBe(false);
       expect(res.errorMessage).toBeUndefined();
-      expect(res.symbol).toBe('msft');
-      expect(typeof res.price).toBe('number');
-      expect(res.price).toBeGreaterThan(1);
       expect(typeof res.lastRefreshed).toBe('string');
       expect(res.lastRefreshed).toMatch(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
+      expect(typeof res.price).toBe('number');
+      expect(res.price).toBeGreaterThan(1);
+      expect(res.symbol).toBe('msft');
     })
     .catch((err) => {
       console.error(err);
@@ -88,12 +88,12 @@ describe('getLatestPrice', () => {
     }));
 });
 
-xdescribe('getManyPrices', () => {
+describe('getManyPrices', () => {
   const count = function count(array, filterFunction) {
     return array.filter(filterFunction).length;
   };
 
-  xit('expects an array of strings (part 1)', () => getManyPrices('msft')
+  it('expects an array of strings (part 1)', () => getManyPrices('msft')
     .then((res) => {
       console.log(res);
       fail('expected to fail');
@@ -103,7 +103,7 @@ xdescribe('getManyPrices', () => {
       expect(err.message).toMatch(/bad input/i);
     }));
 
-  xit('expects an array of strings (part 2)', () => getManyPrices([1, 2, 3])
+  it('expects an array of strings (part 2)', () => getManyPrices([1, 2, 3])
     .then((res) => {
       console.log(res);
       fail('expected to fail');

@@ -4,6 +4,15 @@ const axios = require('axios');
  * @description Get the price for one symbol.
  * @param {string} symbol The symbol of the security.  E.g. BAC.
  * @returns {promise} Resolves to object, rejects to error.
+ * @example
+ * // {
+ * //    error: false,
+ * //    errorMessage: undefined,
+ * //    lastRefreshed: '2019-07-30 10:21:00',
+ * //    price: 120.32,
+ * //    symbol: 'MSFT',
+ * // }
+ * getLatestPrice('MSFT').then(doSomething).catch(handleErr);
 */
 const getLatestPrice = function getLatestPrice(symbol) {
   return new Promise((resolve, reject) => {
@@ -55,6 +64,22 @@ const getLatestPrice = function getLatestPrice(symbol) {
   });
 };
 
+/**
+ * @description Get the prices for many symbols.
+ * @param {array} symbolArray Array of stock symbols e.g. ['bac', 'msft'].
+ * @returns {promise} Resolves to array of objects, rejects to error.
+*/
+const getManyPrices = function getManyPrices(symbolArray) {
+  return new Promise((resolve, reject) => {
+    if (!(Array.isArray(symbolArray)) || symbolArray.some(el => typeof el !== 'string')) {
+      reject(new Error('Bad input to getManyPrices.'));
+      // eslint-disable-next-line
+      return;
+    }
+  });
+};
+
 module.exports = {
   getLatestPrice,
+  getManyPrices,
 };
