@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const { getLatestPrice, getManyPrices } = require('../../controllers/prices.controller');
+const { getLatestPrice, getManyPrices } = require('../controllers/prices.controller');
 
 // #region jasmine setup
 const origTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -30,6 +30,13 @@ const myReporter = {
 
 jasmine.getEnv().addReporter(myReporter);
 // #endregion jasmine setup
+
+const logIf = function logIf(data, conditon) {
+  if (conditon) {
+    console.log(data);
+  }
+};
+
 
 describe('getLatestPrice', () => {
   it('expects a string (part 1)', () => getLatestPrice()
@@ -113,8 +120,9 @@ describe('getManyPrices', () => {
       expect(err.message).toMatch(/bad input/i);
     }));
 
-  xit('resolves when it cannot find a price for a symbol', () => getManyPrices(['ba', 'thisSymbolDoesntExist', 'msft'])
+  it('resolves when it cannot find a price for a symbol', () => getManyPrices(['ba', 'thisSymbolDoesntExist', 'msft'])
     .then((res) => {
+      logIf(res, false);
       expect(Array.isArray(res)).toBe(true);
       expect(count(res, x => x.error === true)).toBe(1);
       expect(count(res, x => x.error === false)).toBe(2);
@@ -124,8 +132,9 @@ describe('getManyPrices', () => {
       fail('expected to succeed');
     }));
 
-  xit('gets the prices for symbols it can find', () => getManyPrices(['ba', 'csco', 'msft'])
+  it('gets the prices for symbols it can find', () => getManyPrices(['ba', 'csco', 'msft'])
     .then((res) => {
+      logIf(res, false);
       expect(Array.isArray(res)).toBe(true);
       expect(count(res, x => x.error === true)).toBe(0);
       expect(count(res, x => x.error === false)).toBe(3);

@@ -24,8 +24,10 @@ const getLatestPrice = function getLatestPrice(symbol) {
     const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
     axios.get(url)
       .then((res) => {
-        // use a regex to avoid capitalization issues (what if it changes?)
-        const cannotFindPrice = Object.keys(res.data).some(el => /error message/i.test(el));
+        const cannotFindPrice = Object.keys(res.data).includes('Error Message');
+
+        const gotCallFrequencyNotice = Object.keys(res.data).includes('Note') &&
+          /call frequency/i.test(res.data.Note);
 
         // returns number
         const getMostRecentClose = function getMostRecentClose() {
@@ -45,6 +47,15 @@ const getLatestPrice = function getLatestPrice(symbol) {
           resolve({
             error: true,
             errorMessage: `Cannot find price for symbol ${symbol}.`,
+            symbol,
+          });
+          return;
+        }
+
+        if (gotCallFrequencyNotice) {
+          resolve({
+            error: true,
+            errorMessage: `Call frequency notice for symbol ${symbol}.`,
             symbol,
           });
           return;
@@ -73,9 +84,16 @@ const getManyPrices = function getManyPrices(symbolArray) {
   return new Promise((resolve, reject) => {
     if (!(Array.isArray(symbolArray)) || symbolArray.some(el => typeof el !== 'string')) {
       reject(new Error('Bad input to getManyPrices.'));
-      // eslint-disable-next-line
       return;
     }
+
+    Promise.all(symbolArray.map(el => getLatestPrice(el)))
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 };
 
