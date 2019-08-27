@@ -7,7 +7,6 @@ const path = require('path');
 
 const indexRouter = require('./routes/index.router');
 const pricesRouter = require('./routes/prices.router');
-const usersRouter = require('./routes/users.router');
 
 const app = express();
 
@@ -43,7 +42,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/prices', pricesRouter);
-app.use('/users', usersRouter);
 app.use('/', indexRouter);
 
 module.exports = app;
