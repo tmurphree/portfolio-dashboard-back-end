@@ -14,7 +14,7 @@ COPY package*.json ./
 
 # Use docker cache to avoid having to copy thousands of files
 # from node_modules
-RUN npm ci
+RUN npm install --only=production
 
 COPY . .
 
