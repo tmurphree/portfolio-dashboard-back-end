@@ -1,1 +1,15 @@
+CHANGELOG.md
+Dockerfile*
+.dockerignore
+docs/
+.DS_Store
 .env
+.eslintrc.js
+.git
+.gitignore
+LICENSE
+README.md
+scripts/
+spec/
+tmp/
+.vscode
