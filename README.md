@@ -15,6 +15,11 @@ API for my [portfolio dashboard](https://github.com/tmurphree/portfolio-dashboar
 6. Run `npm install`.    
 7. Run `npm start`.  
 
+## A note on the unit tests  
+If you get the free AlphaVantage API key you can't run all of the unit tests at once.  You'll get call frequency errors (which should probably be 429 errors).  
+
+As a workaround, run one `describe` block at a time.  
+
 ## Making Changes  
 Fork this repo and submit a pull request.  Pull requests with passing unit tests are 100% more likely to be merged into the project.  
 
