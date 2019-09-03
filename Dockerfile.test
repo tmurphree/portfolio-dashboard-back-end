@@ -8,6 +8,10 @@ FROM node:10.15.0-alpine
 
 WORKDIR /opt/app
 
+# make a group (burros) and add new non-root user (myuser)
+RUN addgroup burros
+RUN adduser -S myuser -G burros
+
 # When using COPY with more than one source file, 
 # the destination must be a directory and end with a /
 COPY package*.json ./
@@ -18,8 +22,10 @@ RUN npm install --only=production
 
 COPY . .
 
-# make non-root user: alpine
-RUN adduser -D myuser
+# add the burros group to the ownership of the files & folders
+RUN chown -R :burros /opt/app
+# allow read and execute so myuser can run the file
+RUN chmod -R 750 /opt/app
 
 # use non-root user
 USER myuser
