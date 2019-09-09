@@ -9,7 +9,7 @@
     "postinstall": "npm audit",
     "start": "node ./bin/www",
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "jasmine spec/pricesController.spec.js",
+    "test": "jasmine spec/integrationTests/prices.spec.js",
     "test:all": "jasmine"
   },
   "keywords": [],
