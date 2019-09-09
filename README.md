@@ -20,6 +20,46 @@ If you get the free AlphaVantage API key you can't run all of the unit tests at 
 
 As a workaround, run one `describe` block at a time.  
 
+## Usage  
+### POST /prices/one  
+Expects `{ symbol: 'msft' }`.
+
+Returns:  
+``` json
+{ 
+  "error": false,
+  "lastRefreshed": "2019-09-09 14:33:00",
+  "price": 136.715,
+  "symbol": "msft"
+}
+```
+
+### POST /prices/many
+Expects `{ symbol: ['bac', 'msft' ] }`.  
+**NOTE** that the property name is *singular* but has an array of one or more symbols.  I did this to standardize the input and reduce developer fatigue.  
+
+
+Returns:  
+``` json
+{
+    "payload": [
+        {
+            "error": false,
+            "lastRefreshed": "2019-09-09 14:36:00",
+            "price": 28.715,
+            "symbol": "bac"
+        },
+        {
+            "error": false,
+            "lastRefreshed": "2019-09-09 14:36:00",
+            "price": 136.55,
+            "symbol": "msft"
+        }
+    ]
+}
+```
+
+
 ## Making Changes  
 Fork this repo and submit a pull request.  Pull requests with passing unit tests are 100% more likely to be merged into the project.  
 
