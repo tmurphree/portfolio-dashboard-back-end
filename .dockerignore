@@ -8,6 +8,7 @@ docs/
 .git
 .gitignore
 LICENSE
+node_modules/
 README.md
 scripts/
 spec/

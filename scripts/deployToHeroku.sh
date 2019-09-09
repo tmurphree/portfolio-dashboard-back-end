@@ -22,9 +22,6 @@ then
   heroku container:login;
   # tag the appropriate local repo to what Heroku wants
   # https://devcenter.heroku.com/articles/container-registry-and-runtime#building-and-pushing-image-s
-  # we can't just use 
-  #     heroku container:push web -a $APP_NAME --verbose;
-  # because the .env file has the dev values and we need the production .env values
   docker tag $DOCKER_IMAGE_REPOSITORY registry.heroku.com/$APP_NAME/web;
   docker push registry.heroku.com/$APP_NAME/web;
   heroku container:release web -a $APP_NAME --verbose;
