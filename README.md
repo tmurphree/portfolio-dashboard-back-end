@@ -35,7 +35,7 @@ Returns:
 ```
 
 ### POST /prices/many
-Expects `{ symbol: ['bac', 'msft' ] }`.  
+Expects `{ symbol: ['bac', 'msft', 'noSuchSymbol'] }`.  
 **NOTE** that the property name is *singular* but has an array of one or more symbols.  I did this to standardize the input and reduce developer fatigue.  
 
 
@@ -54,6 +54,11 @@ Returns:
             "lastRefreshed": "2019-09-09 14:36:00",
             "price": 136.55,
             "symbol": "msft"
+        },
+        {
+            "error": true,
+            "errorMessage": "Cannot find price for symbol noSuchSymbol.",
+            "symbol": "noSuchSymbol"
         }
     ]
 }
