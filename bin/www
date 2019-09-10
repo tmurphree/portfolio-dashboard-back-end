@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 
-if (process.env.NODE_ENV !== 'production') {
+const { checkEnvVariables } = require('../lib/checkEnvVariables');
+
+if (process.env.ALPHAVANTAGE_API_KEY === undefined) {
   require('dotenv').config();
+}
+
+if (!(checkEnvVariables())) {
+  throw new Error('Critical environment variable missing; see above.');
 }
 
 /**
