@@ -33,7 +33,7 @@ const getLatestPrice = function getLatestPrice(symbol) {
         const getMostRecentClose = function getMostRecentClose() {
           // see https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=demo
           // for an example of what res.data looks like
-          const quotes = Object.assign({}, res.data['Time Series (1min)']);
+          const quotes = { ...res.data['Time Series (1min)'] };
 
           const latestDateKey = Object.keys(quotes)
             .sort()
@@ -82,12 +82,12 @@ const getLatestPrice = function getLatestPrice(symbol) {
 */
 const getManyPrices = function getManyPrices(symbolArray) {
   return new Promise((resolve, reject) => {
-    if (!(Array.isArray(symbolArray)) || symbolArray.some(el => typeof el !== 'string')) {
+    if (!(Array.isArray(symbolArray)) || symbolArray.some((el) => typeof el !== 'string')) {
       reject(new Error('Bad input to getManyPrices.'));
       return;
     }
 
-    Promise.all(symbolArray.map(el => getLatestPrice(el)))
+    Promise.all(symbolArray.map((el) => getLatestPrice(el)))
       .then((res) => {
         resolve(res);
       })

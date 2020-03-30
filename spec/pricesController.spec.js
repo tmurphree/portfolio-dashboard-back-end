@@ -131,8 +131,8 @@ xdescribe('getManyPrices', () => {
     .then((res) => {
       logIf(res, true);
       expect(Array.isArray(res)).toBe(true);
-      expect(count(res, x => x.error === true)).toBe(1);
-      expect(count(res, x => x.error === false)).toBe(2);
+      expect(count(res, (x) => x.error === true)).toBe(1);
+      expect(count(res, (x) => x.error === false)).toBe(2);
     })
     .catch((err) => {
       console.error(err);
@@ -143,9 +143,9 @@ xdescribe('getManyPrices', () => {
     .then((res) => {
       logIf(res, true);
       expect(Array.isArray(res)).toBe(true);
-      expect(count(res, x => x.error === true)).toBe(0);
-      expect(count(res, x => x.error === false)).toBe(2);
-      expect(res.every(el => el.price > 1)).toBe(true);
+      expect(count(res, (x) => x.error === true)).toBe(0);
+      expect(count(res, (x) => x.error === false)).toBe(2);
+      expect(res.every((el) => el.price > 1)).toBe(true);
     })
     .catch((err) => {
       console.error(err);
