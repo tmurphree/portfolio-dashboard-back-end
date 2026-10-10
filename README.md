@@ -1,6 +1,4 @@
-# Portfolio Dashboard Back End  
-
-[Click here for Portfolio Dashboard on Heroku](https://tm-portfolio-dashboard.herokuapp.com/)  
+# Portfolio Dashboard Back End
 
 ## Description
 
