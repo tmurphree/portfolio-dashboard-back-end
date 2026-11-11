@@ -12,6 +12,8 @@ This is the back-end service for an early portfolio project, kept public because
 
 I'm sure there are other things I would do differently, but these are the ones that come to mind.
 
+I'm actively working on an entirely new project.
+
 ## Description
 
 API for my [portfolio dashboard](https://github.com/tmurphree/portfolio-dashboard-front-end) project.  Helps keep things like API keys secret and serves up the Vue.js front end.  
