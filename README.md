@@ -1,5 +1,17 @@
 # Portfolio Dashboard Back End
 
+## ⭐ Note: This is an old project ⭐  
+This is the back-end service for an early portfolio project, kept public because it's the only side project I have available to show. While I was employed I didn't have much time to work on side projects. If I were building this API today, I would:
+* Use TypeScript instead of JavaScript so that I could catch type errors at compile time.
+* Use NestJS instead of vanilla Express so that I could use the built-in dependency injection and testing features.
+* Mock the Alpha Vantage API responses using Jest so that I could run the tests without hitting the API.
+* Use class-validator and class-transformer to validate and transform the request bodies.
+* Cache recent quotes for a short time (perhaps with Redis) and send Alpha Vantage requests one at a time so that `/prices/many` would not trip the free-tier call-frequency limit.
+* Return real HTTP statuses and one response shape so that a client could tell an unknown symbol, a rate limit, and an upstream failure apart, and both routes would use the same envelope.
+* Call Alpha Vantage through a small client that passes the symbol as a query param and reads a single env var so that the API key would not end up in a logged URL and the env var name would match the startup check.
+
+I'm sure there are other things I would do differently, but these are the ones that come to mind.
+
 ## Description
 
 API for my [portfolio dashboard](https://github.com/tmurphree/portfolio-dashboard-front-end) project.  Helps keep things like API keys secret and serves up the Vue.js front end.  
